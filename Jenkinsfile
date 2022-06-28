@@ -22,7 +22,7 @@ pipeline {
            terraform validate
 	   terraform plan -out main.tfplan
 	   terraform show -json main.tfplan > main.tfplan.json
-	   docker run --rm -v $PWD:/target -it eerkunt/terraform-compliance -f features -p main.tfplan.json
+	   docker run --rm -v $PWD:/target eerkunt/terraform-compliance -f features -p main.tfplan.json
 
          '''
          }
