@@ -16,7 +16,7 @@ pipeline {
     }
     stage('terraform-init') {
       steps {
-        withAWS(credentials: 'niskarsha_aws', region: 'us-west-2') {
+        withAWS(credentials: 'niskarsha-secret', region: 'us-west-2') {
           sh '''
            terraform init
          '''
