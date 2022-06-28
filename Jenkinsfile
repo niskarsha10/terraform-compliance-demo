@@ -22,25 +22,13 @@ pipeline {
            terraform validate
 	   terraform plan -out main.tfplan
 	   terraform show -json main.tfplan > main.tfplan.json
+	   docker run --rm -v $PWD:/target -it eerkunt/terraform-compliance -f features -p main.tfplan.json
 
          '''
          }
       }
     }
-    stage('TF complaince') {
-           agent {
-               docker {
-                   image "eerkunt/terraform-compliance"
-                   args '-i --entrypoint='
-                 }
-           }
-           steps {
-	     sh '''
-               docker run --rm -v $PWD:/target -it eerkunt/terraform-compliance -f features -p main.tfplan.json
-
-             '''
-	   }
-    }
+   
     stage('tfsec') {
       agent {
         docker {
