@@ -19,10 +19,10 @@ pipeline {
         withAWS(credentials: 'niskarsha-secret', region: 'us-west-2') {
           sh '''
            terraform init
-           terraform validate
-	   terraform plan -out main.tfplan
-	   terraform show -json main.tfplan > main.tfplan.json
-	   docker run --rm -v $PWD:/target eerkunt/terraform-compliance -f features -p main.tfplan.json
+          # terraform validate
+	  # terraform plan -out main.tfplan
+	  # terraform show -json main.tfplan > main.tfplan.json
+	  # docker run --rm -v $PWD:/target eerkunt/terraform-compliance -f features -p main.tfplan.json
 
          '''
          }
@@ -47,7 +47,7 @@ pipeline {
       steps {
         withAWS(credentials: 'niskarsha-secret', region: 'us-west-2') {
           sh '''
-	   terraform apply -auto-approve -no-color
+	   terraform destroy -auto-approve -no-color
          '''
          }
       }
